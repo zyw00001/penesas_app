@@ -1,0 +1,24 @@
+{
+  "name": "penesas",
+  "version": "1.0.0",
+  "description": "penesas project",
+  "main": "main.js",
+  "build": {
+    "appId": "com.penesas.app",
+    "mac": {
+      "target": ["dmg","zip"]
+    },
+    "win": {
+      "target": ["nsis","zip"]
+    }
+  },
+  "scripts": {
+    "start": "electron-packager . penesas --win --out build --arch=x64 --electron-version=4.1.1 --overwrite --ignore=.idea",
+    "dist": "electron-builder --win --x64"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "getmac": "^1.4.6"
+  }
+}
