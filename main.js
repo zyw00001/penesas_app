@@ -73,7 +73,7 @@ const setDomain = (domain) => {
     }
   }
 
-  DOMAIN = domain || 'http://localhost:3001';
+  DOMAIN = domain || 'http://58.250.251.124:3001';
   URL_SINGLE = DOMAIN;
   URL_ALL = `${DOMAIN}/all`;
 };
