@@ -1,5 +1,6 @@
-const {app, BrowserWindow, globalShortcut, session, Menu} = require('electron');
+const {app, BrowserWindow, session, Menu} = require('electron');
 const path = require('path');
+const fs = require('fs');
 const url = require('url');
 
 const DEV = true;
@@ -7,6 +8,17 @@ let win;
 let DOMAIN;
 let URL_SINGLE;
 let URL_ALL;
+
+const readConfig = () => {
+  try {
+    const filePath = path.join(__dirname, '../config.json');
+    console.log(filePath);
+    const data = fs.readFileSync(filePath);
+    return JSON.parse(data);
+  } catch (e) {
+    return {};
+  }
+};
 
 const switchBoard = (item, id, win) => {
   const item2 = Menu.getApplicationMenu().getMenuItemById(id);
@@ -49,6 +61,18 @@ const setMenu = () => {
 };
 
 const setDomain = (domain) => {
+  if (domain) {
+    try {
+      domain = (new url.URL(domain)).origin;
+    } catch (e) {
+      if (domain[0] !== '/') {
+        domain = `http://${domain}`;
+      } else {
+        domain = '';
+      }
+    }
+  }
+
   DOMAIN = domain || 'http://localhost:3001';
   URL_SINGLE = DOMAIN;
   URL_ALL = `${DOMAIN}/all`;
@@ -81,14 +105,15 @@ const createWindow = () => {
 };
 
 app.on('ready', () => {
+  const config = readConfig();
   createWindow();
-  setDomain();
+  setDomain(config.url);
   setMenu();
   setCookieMac((err) => {
     err && console.log(err);
     win.maximize();
     win.loadURL(URL_SINGLE);
-  });
+  }, config.mac);
 });
 
 // Quit when all windows are closed.
