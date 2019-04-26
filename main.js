@@ -23,15 +23,15 @@ const readConfig = () => {
 
 const loadSingle = (item, win) => {
   const menu = Menu.getApplicationMenu();
-  menu.getMenuItemById('single').enabled = true;
-  menu.getMenuItemById('all').enabled = false;
+  menu.getMenuItemById('single').enabled = false;
+  menu.getMenuItemById('all').enabled = true;
   win.loadURL(URL_SINGLE);
 };
 
 const loadAll = (item, win) => {
   const menu = Menu.getApplicationMenu();
-  menu.getMenuItemById('single').enabled = false;
-  menu.getMenuItemById('all').enabled = true;
+  menu.getMenuItemById('single').enabled = true;
+  menu.getMenuItemById('all').enabled = false;
   win.loadURL(URL_ALL);
 };
 
@@ -57,9 +57,8 @@ const addItemsForDev = (submenu) => {
 
 const setMenu = () => {
   const submenu = [
-    {label: '切换到所有看板', id: 'single', click: loadSingle},
-    {label: '切换到单看板', id: 'all', enabled: false, click: loadAll},
-    {type: 'separator'},
+    {label: '单看板', id: 'single', enabled: false, click: loadSingle},
+    {label: '所有看板', id: 'all', click: loadAll},
     {label: '导出', click: loadExport},
     {type: 'separator'},
     {label: '重新加载', accelerator: 'F5', click: (item, win) => win.reload()}
