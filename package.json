@@ -1,6 +1,6 @@
 {
   "name": "penesas",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "penesas project",
   "main": "main.js",
   "build": {
@@ -13,7 +13,7 @@
     }
   },
   "scripts": {
-    "start": "electron-packager . penesas --win --out build --arch=x64 --electron-version=4.1.1 --overwrite --ignore=.idea",
+    "start": "electron-packager . penesas --win --out build --arch=x64 --electron-version=4.1.5 --overwrite --ignore=.idea",
     "dist": "electron-builder --win --x64"
   },
   "author": "",

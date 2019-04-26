@@ -8,6 +8,7 @@ let win;
 let DOMAIN;
 let URL_SINGLE;
 let URL_ALL;
+let URL_EXPORT;
 
 const readConfig = () => {
   try {
@@ -20,15 +21,25 @@ const readConfig = () => {
   }
 };
 
-const switchBoard = (item, id, win) => {
-  const item2 = Menu.getApplicationMenu().getMenuItemById(id);
-  item2.enabled = true;
-  item.enabled = false;
-  if (id === 'single') {
-    win.loadURL(URL_SINGLE);
-  } else if (id === 'all') {
-    win.loadURL(URL_ALL);
-  }
+const loadSingle = (item, win) => {
+  const menu = Menu.getApplicationMenu();
+  menu.getMenuItemById('single').enabled = true;
+  menu.getMenuItemById('all').enabled = false;
+  win.loadURL(URL_SINGLE);
+};
+
+const loadAll = (item, win) => {
+  const menu = Menu.getApplicationMenu();
+  menu.getMenuItemById('single').enabled = false;
+  menu.getMenuItemById('all').enabled = true;
+  win.loadURL(URL_ALL);
+};
+
+const loadExport = (item, win) => {
+  const menu = Menu.getApplicationMenu();
+  menu.getMenuItemById('single').enabled = true;
+  menu.getMenuItemById('all').enabled = true;
+  win.loadURL(URL_EXPORT);
 };
 
 const addItemsForDev = (submenu) => {
@@ -46,8 +57,10 @@ const addItemsForDev = (submenu) => {
 
 const setMenu = () => {
   const submenu = [
-    {label: '切换到所有看板', id: 'single', click: (item) => switchBoard(item, 'all', win)},
-    {label: '切换到单看板', id: 'all', enabled: false, click: (item) => switchBoard(item, 'single', win)},
+    {label: '切换到所有看板', id: 'single', click: loadSingle},
+    {label: '切换到单看板', id: 'all', enabled: false, click: loadAll},
+    {type: 'separator'},
+    {label: '导出', click: loadExport},
     {type: 'separator'},
     {label: '重新加载', accelerator: 'F5', click: (item, win) => win.reload()}
   ];
@@ -76,6 +89,7 @@ const setDomain = (domain) => {
   DOMAIN = domain || 'http://58.250.251.124:3001';
   URL_SINGLE = DOMAIN;
   URL_ALL = `${DOMAIN}/all`;
+  URL_EXPORT = `${DOMAIN}/export`;
 };
 
 const setCookieMac = (callback, mac) => {
