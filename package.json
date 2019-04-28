@@ -14,7 +14,8 @@
   },
   "scripts": {
     "start": "electron-packager . penesas --win --out build --arch=x64 --electron-version=4.1.5 --overwrite --ignore=.idea",
-    "dist": "electron-builder --win --x64"
+    "dist": "electron-builder --win --x64",
+    "dist32": "electron-builder --win --ia32"
   },
   "author": "",
   "license": "ISC",
